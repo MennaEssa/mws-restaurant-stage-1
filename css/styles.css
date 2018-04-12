@@ -438,6 +438,7 @@ nav h1 a {
   width: 50%;
   margin: 0;
   float: none;
+  padding-left:30px;
 }
 #restaurant-container{
    padding: 140px 40px 30px;
