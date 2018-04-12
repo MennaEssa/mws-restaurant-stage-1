@@ -68,6 +68,7 @@ article, aside, canvas, details, figcaption, figure, footer, header, hgroup, men
   padding: 25px;
   text-align: center;
   text-transform: uppercase;
+  margin-top: 5vw;
 }
 
 /* ====================== Navigation ====================== */
@@ -100,7 +101,7 @@ nav h1 a {
   background-color: #eee;
   font-size: 17px;
   margin: 0;
-  width: calc(50% - 80px);
+  width: 100%;
 }
 
 /* Display list items side by side */
@@ -240,16 +241,17 @@ nav h1 a {
 }
 
 #map {
-  width: 100%
+  width: 100%;
 }
-
+#map-container{
+  height: 100vw;
+}
 .inside #map-container {
-  background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
+  position: absolute;
   right: 0;
   top: 80px;
-  width: 50%;
+
+  width: 100%;
 }
 
 .inside #map {
@@ -261,7 +263,7 @@ nav h1 a {
 .inside #footer {
   bottom: 0;
   position: absolute;
-  width: 50%;
+  width: 100%;
 }
 
 #restaurant-name {
@@ -301,11 +303,16 @@ nav h1 a {
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
   padding: 140px 40px 30px;
-  width: 50%;
+  width: 100%;
+}
+
+#restaurant-container{
+  padding-top: 120vw;
 }
 
 #reviews-container {
-  padding: 30px 40px 80px;
+  padding: 0;
+  margin-right: 0;
 }
 
 #reviews-container h2 {
@@ -318,6 +325,7 @@ nav h1 a {
 
 #reviews-list {
   margin: 0;
+  margin-bottom: 20vw;
   padding: 0;
 }
 
@@ -326,11 +334,11 @@ nav h1 a {
   border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
-  margin: 0 0 30px;
+  margin: 0 0 10px;
   overflow: hidden;
   padding: 0 20px 20px;
   position: relative;
-  width: 85%;
+  width: 100%;
 }
 
 #reviews-list li p {
