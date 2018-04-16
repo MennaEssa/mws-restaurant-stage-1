@@ -145,6 +145,12 @@ nav h1 a {
   text-align: right;
 
 }
+#skip-containter-inside{
+  margin-top: 130px;
+  width: 100%;
+  text-align: right;
+
+}
 #skip-link{
   text-align: right;
 }
@@ -442,6 +448,13 @@ nav h1 a {
   width: 50%;
 }
 
+#skip-containter-inside{
+  margin-top: 130px;
+  width: 50%;
+  text-align: left;
+  padding-left: 30px;
+}
+
 .inside #map {
   height: 100%;
   width: 100%;
@@ -454,7 +467,7 @@ nav h1 a {
   padding-left:30px;
 }
 #restaurant-container{
-   padding: 140px 40px 30px;
+   padding: 30px 40px 30px;
 }
 #restaurant-img ,#restaurant-cuisine {
 	width: 90%;

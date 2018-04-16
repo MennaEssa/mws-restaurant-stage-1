@@ -31,10 +31,12 @@
   <main id="maincontent">
     <!-- Beginning map -->
 
-    <section id="map-container" tabindex=-1>
-      <a href="#restaurant-container" tabindex="0" aria-label="skip google map to main content">
-        Skip google map
-      </a>
+    <div id="skip-containter-inside">
+    <a id="skip-link" href="#restaurant-name" aria-label="skip google map to main content">
+      Skip google map
+    </a>
+  </div>
+      <section id="map-container" tabindex=-1>
       <div id="map" aria-describedby="restaurant-address" role="application" tabindex="-1"></div>
     </section>
     <!-- End map -->
