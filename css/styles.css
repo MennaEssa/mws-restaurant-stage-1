@@ -140,6 +140,15 @@ nav h1 a {
   background-color: #ccc;
 }
 
+#skip-containter{
+  width: 100%;
+  text-align: right;
+
+}
+#skip-link{
+  text-align: right;
+}
+
 /* ====================== Restaurant Filtering ====================== */
 
 .filter-options {
@@ -414,6 +423,10 @@ nav h1 a {
     height: 150px;
     width: 30%;
     height: 30vw;
+
+  }
+  .filter-options h2 {
+    margin: 0;
   }
 
   #breadcrumb {
