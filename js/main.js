@@ -184,3 +184,16 @@ addMarkersToMap = (restaurants = self.restaurants) => {
     self.markers.push(marker);
   });
 }
+
+/*
+*  Service worker stuff
+*/
+if (navigator.serviceWorker){
+  navigator.serviceWorker.register('/sw.js' , { scope: '/' }).then(function(){
+      console.log('[sw] Registered.');
+    }).catch(function(){
+    console.log('[sw] Failed to register');
+  });
+} else {
+  console.log('[sw] service not supported , bye.');
+}
