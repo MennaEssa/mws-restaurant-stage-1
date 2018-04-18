@@ -34,7 +34,7 @@ self.addEventListener('fetch', function(event) {
   if (event.request.url.includes('restaurant.html?')) {
     let noParamUrl = event.request.url.split('?')[0];
     //console.log(noParamUrl);
-    event.respondWith(chaches.match(noParamUrl).then(function(resp) {
+    event.respondWith(caches.match(noParamUrl).then(function(resp) {
       return resp || fetch(event.request);
     }));
     return;
