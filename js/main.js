@@ -145,7 +145,7 @@ createRestaurantHTML = (restaurant) => {
   image.alt = DBHelper.altForRestaurant(restaurant);
   li.append(image);
 
-  const name = document.createElement('h1');
+  const name = document.createElement('h2');
   name.innerHTML = restaurant.name;
   name.id = restaurant.name.replace(/ /g, '');
   //console.log(name.id);
