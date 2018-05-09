@@ -1,35 +1,59 @@
 /**
  * Common database helper functions.
  */
+
+const indexdb_name='restaurants_info';
+const indexdb_store = 'restaurants_json';
+let dbPromise;
+
 class DBHelper {
+
 
   /**
    * Database URL.
    * Change this to restaurants.json file location on your server.
    */
   static get DATABASE_URL() {
-    const port = 8000 // Change this to your server port
-    return `http://localhost:${port}/data/restaurants.json`;
+    const port = 1337 ;// Change this to your server port
+    return `http://localhost:${port}/restaurants`;
   }
 
   /**
    * Fetch all restaurants.
    */
-  static fetchRestaurants(callback) {
-    let xhr = new XMLHttpRequest();
-    xhr.open('GET', DBHelper.DATABASE_URL);
-    xhr.onload = () => {
-      if (xhr.status === 200) { // Got a success response from server!
-        const json = JSON.parse(xhr.responseText);
-        const restaurants = json.restaurants;
-        callback(null, restaurants);
-      } else { // Oops!. Got an error from server.
-        const error = (`Request failed. Returned status of ${xhr.status}`);
-        callback(error, null);
-      }
-    };
-    xhr.send();
+   static indexdb_init(){
+      dbPromise = idb.open(indexdb_name,1,function(upgradeDb){
+        switch(upgradeDb.oldVersion){
+          case 0:
+            var restaurantStore = upgradeDb.createObjectStore('restaurants_json' , { keyPath : 'id'}) ;
+        }
+
+
+     });
+   }
+
+  static fetchRestaurants(callback){
+
+    //stage2 fetch 
+
+    fetch(DBHelper.DATABASE_URL).then( j_response => {
+      j_response.json().then(j_resturants => { 
+        callback(null,j_resturants);
+        dbPromise.then(function(db) {
+          var tx = db.transaction(indexdb_store, 'readwrite');
+          var resturant_store = tx.objectStore(indexdb_store);
+            for (var r in j_resturants){
+              resturant_store.put(j_resturants[r]);
+            }
+          tx.complete.then(console.log('win'));
+        });
+
+
+      });
+    }).catch((reject) => callback(`fetchRestaurants error! ${reject}` , null ));
   }
+
+
 
   /**
    * Fetch a restaurant by its ID.
@@ -150,11 +174,15 @@ class DBHelper {
    * Restaurant image URL.
    */
   static imageUrlForRestaurant(restaurant) {
-    return (`/img/${restaurant.photograph}`);
+    if(restaurant.photograph!=null)
+      return (`/img/${restaurant.photograph}.jpg`);
+    else
+      return '/img/not_available.jpg';
+
   }
 
   static altForRestaurant(restaurant){
-    return (restaurant.alt);
+    return (`photograph of ${restaurant.name}`);
   }
   /**
    * Map marker for a restaurant.
