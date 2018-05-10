@@ -36,7 +36,7 @@ self.addEventListener('fetch', function(event) {
   //fix restaurant url to match cache
   let requestUrl = new URL(event.request.url);
 
-  if (requestUrl.pathname.startsWith('/restaurants/')) {
+  if (requestUrl.pathname.startsWith('/restaurants')) {
     return;
   }
 
