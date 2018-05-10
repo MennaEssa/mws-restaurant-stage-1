@@ -32,7 +32,7 @@ class DBHelper {
 
 
    static getCachedRestaurants(){
-
+      DBHelper.indexdb_init();
       return dbPromise.then(function(db) {
         var tx = db.transaction(indexdb_store);
         var restaurant_store = tx.objectStore(indexdb_store);
