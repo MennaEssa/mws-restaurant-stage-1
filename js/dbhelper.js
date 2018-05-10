@@ -3,7 +3,7 @@
  */
 
 const indexdb_name='restaurants_info';
-const indexdb_store = 'restaurants_json';
+const indexdb_store = 'restaurants';
 let dbPromise;
 
 class DBHelper {
@@ -25,16 +25,33 @@ class DBHelper {
       dbPromise = idb.open(indexdb_name,1,function(upgradeDb){
         switch(upgradeDb.oldVersion){
           case 0:
-            var restaurantStore = upgradeDb.createObjectStore('restaurants_json' , { keyPath : 'id'}) ;
+            var restaurantStore = upgradeDb.createObjectStore( indexdb_store , { keyPath : 'id'}) ;
         }
-
-
      });
    }
 
+
+   static getCachedRestaurants(){
+
+      return dbPromise.then(function(db) {
+        var tx = db.transaction(indexdb_store);
+        var restaurant_store = tx.objectStore(indexdb_store);
+        return restaurant_store.getAll();
+      });
+  }
+
+
   static fetchRestaurants(callback){
 
-    //stage2 fetch 
+    //stage2 
+    //fetch from database 
+    DBHelper.getCachedRestaurants().then( restaurants => {
+        if(restaurants.length > 0)
+        return callback(null , restaurants);
+        
+    });
+
+    //no db found , fetch data from API Server cached it and pass on to user.
 
     fetch(DBHelper.DATABASE_URL).then( j_response => {
       j_response.json().then(j_resturants => { 
