@@ -33,13 +33,14 @@ self.addEventListener('install', function(event) {
 //respond from caches
 
 self.addEventListener('fetch', function(event) {
-  //fix restaurant url to match cache
+  // /restaurants and /restaurant are handled by indexdb.
   let requestUrl = new URL(event.request.url);
 
-  if (requestUrl.pathname.startsWith('/restaurants')) {
+  if (requestUrl.pathname.startsWith('/restaurant')) {
     return;
   }
 
+  //get image from cache
   if(requestUrl.pathname.startsWith('/img/')){
     event.respondWith(caches.match(event.request.url).then(function(response) {
     return response || fetch(event.request);
@@ -47,6 +48,7 @@ self.addEventListener('fetch', function(event) {
     return;
   }
   
+
   event.respondWith(
     caches.open(cache_name).then(function(cache) {
       return cache.match(event.request).then(function (response) {
@@ -58,6 +60,5 @@ self.addEventListener('fetch', function(event) {
     })
   );
 
-  //anything else is peaceful  
 });
 

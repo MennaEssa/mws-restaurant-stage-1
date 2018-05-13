@@ -48,26 +48,23 @@ class DBHelper {
     DBHelper.getCachedRestaurants().then( restaurants => {
         if(restaurants.length > 0)
         return callback(null , restaurants);
-        
-    });
-
-    //no db found , fetch data from API Server cached it and pass on to user.
-
-    fetch(DBHelper.DATABASE_URL).then( j_response => {
-      j_response.json().then(j_resturants => { 
-        callback(null,j_resturants);
-        dbPromise.then(function(db) {
-          var tx = db.transaction(indexdb_store, 'readwrite');
-          var resturant_store = tx.objectStore(indexdb_store);
-            for (var r in j_resturants){
-              resturant_store.put(j_resturants[r]);
-            }
-          tx.complete.then(console.log('win'));
-        });
-
-
-      });
-    }).catch((reject) => callback(`fetchRestaurants error! ${reject}` , null ));
+        else{
+          //no db found , fetch data from API Server cached it and pass on to user.
+          fetch(DBHelper.DATABASE_URL).then( j_response => {
+            j_response.json().then(j_resturants => { 
+              dbPromise.then(function(db) {
+              var tx = db.transaction(indexdb_store, 'readwrite');
+              var resturant_store = tx.objectStore(indexdb_store);
+              for (var r in j_resturants){
+                resturant_store.put(j_resturants[r]);
+              }
+              callback(null,j_resturants);
+              tx.complete.then(console.log('win'));
+            });
+          });
+        }).catch((reject) => callback(`fetchRestaurants error! ${reject}` , null ));
+      }      
+    });   
   }
 
 
