@@ -11,16 +11,16 @@ self.addEventListener('install', function(event) {
           '/js/dbhelper.js',
           '/js/main.js',
           '/js/restaurant_info.js',
-          '/img/1.jpg',
-          '/img/2.jpg',
-          '/img/3.jpg',
-          '/img/4.jpg',
-          '/img/5.jpg',
-          '/img/6.jpg',
-          '/img/7.jpg',
-          '/img/8.jpg',
-          '/img/9.jpg',
-          '/img/10.jpg'
+          'dist/img/1.jpg',
+          'dist/img/2.jpg',
+          'dist/img/3.jpg',
+          'dist/img/4.jpg',
+          'dist/img/5.jpg',
+          'dist/img/6.jpg',
+          'dist/img/7.jpg',
+          'dist/img/8.jpg',
+          'dist/img/9.jpg',
+          'dist/img/10.jpg'
         ]);
       }
     )
@@ -35,10 +35,6 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
   // /restaurants and /restaurant are handled by indexdb.
   let requestUrl = new URL(event.request.url);
-
-  if (requestUrl.pathname.startsWith('/restaurant')) {
-    return;
-  }
 
   //get image from cache
   if(requestUrl.pathname.startsWith('/img/')){

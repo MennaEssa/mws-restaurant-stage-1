@@ -4,9 +4,9 @@
 
 const indexdb_name='restaurants_info';
 const indexdb_store = 'restaurants';
-let dbPromise;
 
 class DBHelper {
+
 
 
   /**
@@ -21,18 +21,18 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    */
-   static indexdb_init(){
-      dbPromise = idb.open(indexdb_name,1,function(upgradeDb){
-        switch(upgradeDb.oldVersion){
+   static indexdb_init() {
+    return idb.open(indexdb_name , 1  , function(upgradeDb) {
+      switch(upgradeDb.oldVersion){
           case 0:
-            var restaurantStore = upgradeDb.createObjectStore( indexdb_store , { keyPath : 'id'}) ;
-        }
-     });
-   }
+            upgradeDb.createObjectStore( indexdb_store , { keyPath : 'id'}) ;
+      }
+    });
+  }
 
 
    static getCachedRestaurants(){
-      DBHelper.indexdb_init();
+     let dbPromise = DBHelper.indexdb_init();
       return dbPromise.then(function(db) {
         var tx = db.transaction(indexdb_store);
         var restaurant_store = tx.objectStore(indexdb_store);
@@ -52,6 +52,7 @@ class DBHelper {
           //no db found , fetch data from API Server cached it and pass on to user.
           fetch(DBHelper.DATABASE_URL).then( j_response => {
             j_response.json().then(j_resturants => { 
+              let dbPromise=DBHelper.indexdb_init();
               dbPromise.then(function(db) {
               var tx = db.transaction(indexdb_store, 'readwrite');
               var resturant_store = tx.objectStore(indexdb_store);
@@ -189,9 +190,9 @@ class DBHelper {
    */
   static imageUrlForRestaurant(restaurant) {
     if(restaurant.photograph!=null)
-      return (`/img/${restaurant.photograph}.jpg`);
+      return (`dist/img/${restaurant.photograph}.jpg`);
     else
-      return '/img/not_available.jpg';
+      return 'dist/img/not_available.jpg';
 
   }
 
