@@ -7,6 +7,10 @@ var markers = []
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
+
+
+DBHelper.indexdb_init();
+
 document.addEventListener('DOMContentLoaded', (event) => {
   fetchNeighborhoods();
   fetchCuisines();
@@ -197,3 +201,4 @@ if (navigator.serviceWorker){
 } else {
   console.log('[sw] service not supported , bye.');
 }
+
