@@ -9,7 +9,7 @@ gulp.task('default', defaultTask);
 
 gulp.task('test', [
 	'scripts-dist',
-	'compress-img',
+	'imagemin',
 	'minify-css',
 
 ]);
