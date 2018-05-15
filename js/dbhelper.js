@@ -43,14 +43,9 @@ class DBHelper {
 
   static fetchRestaurants(callback){
 
-    //stage2 
-    //fetch from database 
-    DBHelper.getCachedRestaurants().then( restaurants => {
-        if(restaurants.length > 0)
-        return callback(null , restaurants);
-        else{
-          //no db found , fetch data from API Server cached it and pass on to user.
-          fetch(DBHelper.DATABASE_URL).then( j_response => {
+    //stage2
+    //fetch from network first and update indexdb.
+    fetch(DBHelper.DATABASE_URL).then( j_response => {
             j_response.json().then(j_resturants => { 
               let dbPromise=DBHelper.indexdb_init();
               dbPromise.then(function(db) {
@@ -60,12 +55,18 @@ class DBHelper {
                 resturant_store.put(j_resturants[r]);
               }
               callback(null,j_resturants);
-              tx.complete.then(console.log('win'));
+              tx.complete.then(console.log('updating db.'));
             });
           });
-        }).catch((reject) => callback(`fetchRestaurants error! ${reject}` , null ));
-      }      
-    });   
+        }).catch( (reject) => {
+          DBHelper.getCachedRestaurants().then(restaurants => {
+            if(restaurants.length>0)
+              return callback(null,restaurants);
+            else //indexdb failed as well
+              return callback('failed to fetch restaurant data', null);
+          }).catch( () => callback('failed to fetch restaurants data from db' , null));
+            
+      });  
   }
 
 
