@@ -191,9 +191,9 @@ class DBHelper {
    */
   static imageUrlForRestaurant(restaurant) {
     if(restaurant.photograph!=null)
-      return (`dist/img/${restaurant.photograph}.jpg`);
+      return (`dist/img/${restaurant.photograph}.webp`);
     else
-      return 'dist/img/not_available.jpg';
+      return 'dist/img/not_available.webp';
 
   }
 

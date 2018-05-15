@@ -11,16 +11,16 @@ self.addEventListener('install', function(event) {
           '/js/dbhelper.js',
           '/js/main.js',
           '/js/restaurant_info.js',
-          'dist/img/1.jpg',
-          'dist/img/2.jpg',
-          'dist/img/3.jpg',
-          'dist/img/4.jpg',
-          'dist/img/5.jpg',
-          'dist/img/6.jpg',
-          'dist/img/7.jpg',
-          'dist/img/8.jpg',
-          'dist/img/9.jpg',
-          'dist/img/10.jpg'
+          'dist/img/1.webp',
+          'dist/img/2.webp',
+          'dist/img/3.webp',
+          'dist/img/4.webp',
+          'dist/img/5.webp',
+          'dist/img/6.webp',
+          'dist/img/7.webp',
+          'dist/img/8.webp',
+          'dist/img/9.webp',
+          'dist/img/10.webp'
         ]);
       }
     )

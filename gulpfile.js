@@ -4,6 +4,8 @@ let uglify = require('gulp-uglify');
 let sourcemaps = require('gulp-sourcemaps');
 let imagemin = require('gulp-imagemin');
 let cleanCSS = require('gulp-clean-css');
+const webp = require('gulp-webp');
+
 
 gulp.task('default', defaultTask);
 
@@ -32,10 +34,16 @@ gulp.task('imagemin', function() {
         .pipe(gulp.dest('dist/img'));
 });
 
+gulp.task('webp', () =>
+    gulp.src('img/*.jpg')
+        .pipe(webp())
+        .pipe(gulp.dest('dist/img'))
+);
+
 gulp.task('minify-css', () => {
   return gulp.src('css/*.css')
     .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest('dist/img'));
 });
 
 function defaultTask(done) {
