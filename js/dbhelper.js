@@ -145,7 +145,12 @@ static timeConverter(t) {
             })
           .catch(() =>{
             //we failed , fall back to indexdb
-              restaurant.reviews=DBHelper.getChachedReviews(id);
+              DBHelper.getChachedReviews(id).then(result => {
+                restaurant.reviews=result;
+                console.log("this is form indexdb");
+                console.log(restaurant.reviews)
+                callback(null,restaurant);
+              });
             });
         } else { // Restaurant does not exist in the database
           callback('Restaurant does not exist', null);

@@ -1,5 +1,8 @@
 let cache_name = 're-cache';
 //adding all pages to cache
+
+
+
 self.addEventListener('install', function(event) {
   console.log('[sw] Installed.');
   event.waitUntil(
@@ -36,24 +39,24 @@ self.addEventListener('fetch', function(event) {
   // /restaurants and /restaurant are handled by indexdb.
   let requestUrl = new URL(event.request.url);
 
-  //get image from cache
-  if(requestUrl.pathname.startsWith('/img/')){
-    event.respondWith(caches.match(event.request.url).then(function(response) {
-    return response || fetch(event.request);
-    }));
-    return;
-  }
-  
+  //cache the maps 
+  if(requestUrl.pathname.startsWith('/maps')) {
+
   event.respondWith(
     caches.open(cache_name).then(function(cache) {
       return cache.match(event.request).then(function (response) {
         return response || fetch(event.request).then(function(response) {
           cache.put(event.request, response.clone());
           return response;
+          });
         });
-      });
-    })
-  ); 
+      })
+    ); 
+    return;
+  }
 
+  event.respondWith(caches.match(event.request).then(function(response) {
+    return response || fetch(event.request);
+    }));
 });
 
