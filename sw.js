@@ -44,7 +44,6 @@ self.addEventListener('fetch', function(event) {
     return;
   }
   
-
   event.respondWith(
     caches.open(cache_name).then(function(cache) {
       return cache.match(event.request).then(function (response) {
@@ -54,7 +53,7 @@ self.addEventListener('fetch', function(event) {
         });
       });
     })
-  );
+  ); 
 
 });
 

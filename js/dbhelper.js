@@ -3,7 +3,9 @@
  */
 
 const indexdb_name='restaurants_info';
+const reviews_store = 'reviews';
 const indexdb_store = 'restaurants';
+const port = 1337;
 
 class DBHelper {
 
@@ -17,7 +19,6 @@ class DBHelper {
     const port = 1337 ;// Change this to your server port
     return `http://localhost:${port}/restaurants`;
   }
-
   /**
    * Fetch all restaurants.
    */
@@ -26,9 +27,33 @@ class DBHelper {
       switch(upgradeDb.oldVersion){
           case 0:
             upgradeDb.createObjectStore( indexdb_store , { keyPath : 'id'}) ;
+            upgradeDb.createObjectStore(reviews_store);
       }
     });
   }
+
+
+  //help from SO https://stackoverflow.com/questions/847185/convert-a-unix-timestamp-to-time-in-javascript
+static timeConverter(t) {     
+   var a = new Date(t);
+    var today = new Date();
+    var yesterday = new Date(Date.now() - 86400000);
+    var months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    var year = a.getFullYear();
+    var month = months[a.getMonth()];
+    var date = a.getDate();
+    var hour = a.getHours();
+    var min = a.getMinutes();
+    if (a.setHours(0,0,0,0) == today.setHours(0,0,0,0))
+        return 'today, ' + hour + ':' + min;
+    else if (a.setHours(0,0,0,0) == yesterday.setHours(0,0,0,0))
+        return 'yesterday, ' + hour + ':' + min;
+    else if (year == today.getFullYear())
+        return date + ' ' + month + ', ' + hour + ':' + min;
+    else
+        return date + ' ' + month + ' ' + year + ', ' + hour + ':' + min;
+}
+
 
 
    static getCachedRestaurants(){
@@ -40,6 +65,23 @@ class DBHelper {
       });
   }
 
+  static getChachedReviews(id){
+    let dbPromise=DBHelper.indexdb_init();
+    return dbPromise.then(function(db) {
+        var tx = db.transaction(reviews_store);
+        var restaurant_store = tx.objectStore(reviews_store);
+        return restaurant_store.get(id);
+      });
+  }
+
+  static getRestaurantReview(id){
+    let review_url = `http://localhost:${port}/reviews/?restaurant_id=${id}`;
+    return fetch(review_url).then(j_response => {
+      return j_response.json().then(j_reviews =>{
+        return j_reviews;
+      });
+    });
+  }
 
   static fetchRestaurants(callback){
 
@@ -82,7 +124,29 @@ class DBHelper {
       } else {
         const restaurant = restaurants.find(r => r.id == id);
         if (restaurant) { // Got the restaurant
-          callback(null, restaurant);
+          DBHelper.getRestaurantReview(id).then( result => {
+            //fetch most recent reviews
+            restaurant.reviews= result;
+            restaurant.reviews.forEach(review => review.date=DBHelper.timeConverter(review.createdAt));
+
+            //update indexdb.
+            let dbPromise= DBHelper.indexdb_init();
+            dbPromise.then(db => {
+              var tx = db.transaction(reviews_store , 'readwrite');
+              var rev_store = tx.objectStore(reviews_store);
+              rev_store.put(restaurant.reviews , id );
+              console.log(restaurant.reviews);
+              tx.complete.then(console.log(`updated review with id ${id}`)).catch(error => console.log(error));
+            });
+
+            //and on we go.
+
+            callback(null, restaurant);
+            })
+          .catch(() =>{
+            //we failed , fall back to indexdb
+              restaurant.reviews=DBHelper.getChachedReviews(id);
+            });
         } else { // Restaurant does not exist in the database
           callback('Restaurant does not exist', null);
         }
@@ -93,6 +157,8 @@ class DBHelper {
   /**
    * Fetch restaurants by a cuisine type with proper error handling.
    */
+
+
   static fetchRestaurantByCuisine(cuisine, callback) {
     // Fetch all restaurants  with proper error handling
     DBHelper.fetchRestaurants((error, restaurants) => {
@@ -131,7 +197,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        let results = restaurants
+        let results = restaurants;
         if (cuisine != 'all') { // filter by cuisine
           results = results.filter(r => r.cuisine_type == cuisine);
         }

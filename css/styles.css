@@ -444,7 +444,7 @@ nav h1 a {
   }
 
   #breadcrumb {
-    width: 50%;
+    width: calc(50%);
 }
 
 .inside #map-container {
