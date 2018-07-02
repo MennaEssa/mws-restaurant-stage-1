@@ -168,7 +168,7 @@ createRestaurantHTML = (restaurant) => {
     let star = document.createElement('button');
     star.classList.add('fav-true' , 'fav-false');
     star.innerHTML= '✪';
-    if (restaurant.is_favorite)
+    if (restaurant.is_favorite == true || restaurant.is_favorite == "true")
         star.className='fav-true';
     else
         star.className='fav-false';
