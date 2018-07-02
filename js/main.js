@@ -137,12 +137,41 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
   addMarkersToMap();
 }
 
+//fav toggle
+
+function toggleFav(item) {
+
+    //if true , send request to set fav to false then change class to fav-false
+    if(item.className === 'fav-true'){
+
+      item.classList.toggle('fav-false');
+      item.className='fav-false';
+    }
+    else {
+      item.classList.toggle('fav-true');
+      item.className='fav-true';
+    }
+    //if false , send request to set fav to true then change class to fav-true
+
+  }
+
+
 /**
  * Create restaurant HTML.
  */
 createRestaurantHTML = (restaurant) => {
   const li = document.createElement('li');
-
+    //create toggle fav button
+    let star = document.createElement('button');
+    star.classList.add('fav-true' , 'fav-false');
+    star.innerHTML= '✪';
+    if (restaurant.is_favorite)
+        star.className='fav-true';
+    else
+        star.className='fav-false';
+    star.setAttribute('onclick' , 'toggleFav(this)');
+    li.append(star);
+  
   const image = document.createElement('img');
   image.className = 'restaurant-img';
   image.src = DBHelper.imageUrlForRestaurant(restaurant);

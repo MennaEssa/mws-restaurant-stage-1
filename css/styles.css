@@ -254,6 +254,46 @@ nav h1 a {
   text-transform: uppercase;
 }
 
+#restaurants-list .fav-true {
+  color :  #d2781f;
+  text-shadow: 1px 1px 5px grey;
+  margin: 0;
+  border: none;
+  padding: 0;
+  background: none;
+  font-size: 20pt;
+}
+
+#restaurants-list .fav-false {
+  color :  grey ;
+  text-shadow:  1px 1px 5px orange;
+  margin: 0;
+  border: none;
+  padding: 0;
+  background: none;
+  font-size: 20pt;
+}
+#restaurants-list .fav-false:focus ,
+#restaurants-list .fav-true:focus 
+
+{
+  outline:0
+}
+
+
+#restaurants-list .fav-false:hover {
+  color : #d2781f;
+  text-shadow:  1px 1px 5px grey;
+
+}
+
+#restaurants-list .fav-true:hover {
+  color : grey;
+  text-shadow:  1px 1px 5px orange;
+
+}
+
+
 /* ====================== Restaurant Details ====================== */
 
 .inside header {

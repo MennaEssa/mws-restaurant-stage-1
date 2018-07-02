@@ -232,6 +232,7 @@ static timeConverter(t) {
     });
   }
 
+  
   /**
    * Fetch all cuisines with proper error handling.
    */
