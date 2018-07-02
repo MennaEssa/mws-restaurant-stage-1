@@ -139,17 +139,20 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 
 //fav toggle
 
-function toggleFav(item) {
+function toggleFav(item , restaurant_id) {
 
     //if true , send request to set fav to false then change class to fav-false
     if(item.className === 'fav-true'){
 
       item.classList.toggle('fav-false');
       item.className='fav-false';
+      DBHelper.updateFav(restaurant_id,false);
     }
     else {
       item.classList.toggle('fav-true');
       item.className='fav-true';
+      DBHelper.updateFav(restaurant_id,true);
+
     }
     //if false , send request to set fav to true then change class to fav-true
 
@@ -169,7 +172,7 @@ createRestaurantHTML = (restaurant) => {
         star.className='fav-true';
     else
         star.className='fav-false';
-    star.setAttribute('onclick' , 'toggleFav(this)');
+    star.setAttribute('onclick' , `toggleFav(this , ${restaurant.id})`);
     li.append(star);
   
   const image = document.createElement('img');
