@@ -3,6 +3,8 @@ let restaurants,
   cuisines
 var map
 var markers = []
+let fav_queue = [];
+
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -141,21 +143,40 @@ fillRestaurantsHTML = (restaurants = self.restaurants) => {
 
 function toggleFav(item , restaurant_id) {
 
-    //if true , send request to set fav to false then change class to fav-false
-    if(item.className === 'fav-true'){
+    //offline
+    //toggle the button and push the request in queue for later sync.
+    if(!navigator.onLine){
 
-      item.classList.toggle('fav-false');
-      item.className='fav-false';
-      DBHelper.updateFav(restaurant_id,false);
+      if(item.className === 'fav-true'){
+          item.classList.toggle('fav-false');
+          item.className='fav-false';
+          fav_queue.push({'id' : restaurant_id , 'isFav' : false }); 
+
+      }
+      else {
+        item.classList.toggle('fav-true');
+        item.className='fav-true';
+        fav_queue.push({'id' : restaurant_id , 'isFav' : true }); 
+
+      } 
+      return;         
+    }
+
+    //online 
+    //if true , send request to set fav to false then change class to fav-false
+    //if false , send request to set fav to true then change class to fav-true
+    if(item.className === 'fav-true'){
+      DBHelper.updateFav(restaurant_id,false).then(()=>{
+          item.classList.toggle('fav-false');
+          item.className='fav-false';
+      });
     }
     else {
-      item.classList.toggle('fav-true');
-      item.className='fav-true';
-      DBHelper.updateFav(restaurant_id,true);
-
-    }
-    //if false , send request to set fav to true then change class to fav-true
-
+      DBHelper.updateFav(restaurant_id,true).then(()=> {
+        item.classList.toggle('fav-true');
+        item.className='fav-true';
+      });
+    }  
   }
 
 
@@ -221,16 +242,35 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 }
 
+
 /*
 *  Service worker stuff
 */
-if (navigator.serviceWorker){
-  navigator.serviceWorker.register('/sw.js' , { scope: '/' }).then(function(){
-      console.log('[sw] Registered.');
-    }).catch(function(){
-    console.log('[sw] Failed to register');
+document.addEventListener('DOMContentLoaded' , event => {
+
+  if (navigator.serviceWorker){
+    navigator.serviceWorker.register('/sw.js' , { scope: '/' }).then(reg => {
+        console.log('[sw] Registered.');
+      }).catch(function(){
+      console.log('[sw] Failed to register');
+    });
+  } else {
+    console.log('[sw] service not supported , bye.');
+  }
+});
+
+
+/*Sync the queue when back online!*/
+function doSync() {
+  fav_queue.forEach( var_object => {
+    DBHelper.updateFav(var_object.id,var_object.isFav).then(()=>{
+      console.log(`synced fav element ${var_object.id}`);
+      fav_queue.shift();
+    }).catch((error)=> {
+      console.log(`sync failed for element ${var_object.id}`);
+      console.log(error);
+    });
   });
-} else {
-  console.log('[sw] service not supported , bye.');
 }
 
+window.addEventListener('online', doSync);

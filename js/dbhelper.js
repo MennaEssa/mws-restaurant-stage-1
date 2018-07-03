@@ -287,10 +287,16 @@ static timeConverter(t) {
   }
 
   static updateFav(restaurant_id , isFav ) {
-      fetch(`http://localhost:1337/restaurants/${restaurant_id}/?is_favorite=${isFav}`, {
+    let url = DBHelper.DATABASE_URL + `/${restaurant_id}/?is_favorite=${isFav}`;
+    return fetch(url, {
         method: 'PUT'
-        }).then(console.log("fav updated successfully"))
-        .catch(error => console.log("error"));
+        }).then(() => {
+          console.log("fav updated successfully");
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
   }
 
 }
