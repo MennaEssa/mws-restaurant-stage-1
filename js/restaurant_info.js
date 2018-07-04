@@ -1,5 +1,7 @@
 let restaurant;
 var map;
+let modal = document.getElementById('r-modal');
+
 
 /**
  * Initialize Google map, called from HTML.
@@ -160,4 +162,20 @@ getParameterByName = (name, url) => {
   if (!results[2])
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
+
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+
+function showModal(){
+      modal.style.display = "block";
+}
+
+function closeModal(){
+      modal.style.display = "none";
 }

@@ -56,11 +56,43 @@
     <!-- Beginning reviews -->
     <section id="reviews-container">
       <h3>Reviews</h3>
+      <button id="r-btn" onclick="showModal()">Add Review</button>
       <ul id="reviews-list"></ul>
     </section>
     <!-- End reviews -->
   </main>
   <!-- End main -->
+
+  <!--Begin modal form -->
+
+  <div id="r-modal" class="modal">
+
+  <!-- Modal content -->
+  <div id="modal-content" class="imodal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <h2> Submit Review </h2>
+    <label for="r-name" >Name: </label>
+    <input type="text" id="r-name" name="firstname"/>
+    <br/><br/>
+
+    <label for="r-radio">Rating:</label><br/>
+    <span id="r-radio">
+      <input type="radio" name="r-list" value="1"/>1
+      <input type="radio" name="r-list" value="2"/>2
+      <input type="radio" name="r-list" value="3"/>3
+      <input type="radio" name="r-list" value="4"/>4
+      <input type="radio" name="r-list" value="5"/>5 
+    </span>
+    <br/><br/>
+    <label for="r-comments">Comments:</label><br/>
+    <textarea id="r-comments"name="comments" rows="5"></textarea>
+    <br/>
+    <button id="btn-submit">Submit</button>
+  </div>
+
+</div>
+
+  <!-- End modal form -->
 
   <!-- Beginning footer -->
   <footer id="footer">
