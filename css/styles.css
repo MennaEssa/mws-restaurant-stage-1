@@ -378,6 +378,20 @@ nav h1 a {
   padding-bottom: 1pt;
 }
 
+#r-btn{
+
+  background-color:#d2781f;
+  border : none;
+  color: #fff;
+  display: inline-block;
+  font-size: 15px;
+  margin: 0 0 20px;
+  padding: 8px 10px 10px;
+  text-align: center;
+  text-decoration: none;
+
+}
+
 #reviews-list {
   margin: 0;
   margin-bottom: 20vw;
@@ -603,6 +617,12 @@ nav h1 a {
     float: right;
     font-size: 40px;
     font-weight: bold;
+}
+
+.modal #error {
+  color:red;
+  display: none;
+
 }
 
 

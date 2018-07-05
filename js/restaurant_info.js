@@ -173,6 +173,7 @@ window.onclick = function(event) {
 
 
 function showModal(){
+      document.getElementById("error").style.display="none";
       modal.style.display = "block";
 }
 
@@ -195,6 +196,12 @@ function submitModal(){
     let name=document.getElementById('r-name').value;
     let rating=getSelectedRadio('r-list');
     let comments=document.getElementById('r-comments').value;
+
+    if(name=="" || rating==null|| comments=="")
+    {
+      document.getElementById("error").style.display="block";
+      return;
+    }
     let params = {
     'restaurant_id': rid,
     'name': name,
@@ -204,6 +211,7 @@ function submitModal(){
     
     if(!navigator.onLine){
       AddtoSyncRevDB(params);
+      closeModal();
       return;
     }
 
