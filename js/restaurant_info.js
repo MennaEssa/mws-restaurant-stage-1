@@ -187,9 +187,10 @@ function getSelectedRadio(name){
         return radios[i].value;
   }
 
+
+
 function submitModal(){
 
-    const url = 'http://localhost:1337/reviews/';
     let rid = window.location.href.split('?id=')[1];
     let name=document.getElementById('r-name').value;
     let rating=getSelectedRadio('r-list');
@@ -201,17 +202,15 @@ function submitModal(){
     'comments': comments
     } ; 
     
-    fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify(params), 
-    }).then(console.log('posted review!')).
-    catch(error => console.log('error'));
+    if(!navigator.onLine){
+      AddtoSyncRevDB(params);
+      return;
+    }
 
+    DBHelper.sendReview(params);
     closeModal();
     location.reload();
 }
 
 
+window.addEventListener('online', doSync);

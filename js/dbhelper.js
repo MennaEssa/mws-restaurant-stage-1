@@ -304,4 +304,16 @@ static timeConverter(t) {
 
   }
 
+  static sendReview(rev_params){
+    const url = 'http://localhost:1337/reviews/';
+    return fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(rev_params), 
+    }).then(console.log('posted review!')).
+    catch(error => console.log('error'));
+  }
+
 }

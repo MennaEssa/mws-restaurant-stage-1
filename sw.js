@@ -14,6 +14,7 @@ self.addEventListener('install', function(event) {
           '/js/dbhelper.js',
           '/js/main.js',
           '/js/restaurant_info.js',
+          '/js/sync.js',
           'dist/img/1.webp',
           'dist/img/2.webp',
           'dist/img/3.webp',
@@ -59,4 +60,3 @@ self.addEventListener('fetch', function(event) {
     return response || fetch(event.request);
     }));
 });
-

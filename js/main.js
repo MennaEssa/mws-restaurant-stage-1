@@ -246,17 +246,18 @@ addMarkersToMap = (restaurants = self.restaurants) => {
 /*
 *  Service worker stuff
 */
-document.addEventListener('DOMContentLoaded' , event => {
 
-  if (navigator.serviceWorker){
-    navigator.serviceWorker.register('/sw.js' , { scope: '/' }).then(reg => {
-        console.log('[sw] Registered.');
-      }).catch(function(){
-      console.log('[sw] Failed to register');
-    });
-  } else {
-    console.log('[sw] service not supported , bye.');
-  }
-});
 
+if (navigator.serviceWorker){
+  navigator.serviceWorker.register('/sw.js' , { scope: '/' }).then(reg => {
+      console.log('[sw] Registered.');
+    }).catch(function(){
+    console.log('[sw] Failed to register');
+  });
+} else {
+  console.log('[sw] service not supported , bye.');
+}
+
+
+window.addEventListener('online', doSync);
 
