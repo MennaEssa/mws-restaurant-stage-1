@@ -570,7 +570,7 @@ nav h1 a {
     /*width and height*/
     width: 600px;
     max-width: 100%;
-    height: 450px;
+    height: 500px;
     max-height: 100%;
 
     background-color: #fefefe;
@@ -621,6 +621,7 @@ nav h1 a {
 
 .modal #error {
   color:red;
+  font-size : 15px ;
   display: none;
 
 }

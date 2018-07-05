@@ -65,28 +65,28 @@
 
   <!--Begin modal form -->
 
-  <div id="r-modal" class="modal">
+  <div aria-role="form" id="r-modal" class="modal">
 
   <!-- Modal content -->
   <div id="modal-content" class="imodal">
     <span class="close" onclick="closeModal()">&times;</span>
     <h2> Submit Review </h2>
-    <label id="error"> Form missing one or more elements! </label> <br/>
+    <label aria-hidden="true" id="error"> Form missing one or more elements! </label> <br/>
     <label for="r-name" >Name: </label>
-    <input type="text" id="r-name" name="firstname"/>
+    <input aria-label="enter restaurant name" type="text" id="r-name" name="firstname"/>
     <br/><br/>
 
     <label for="r-radio">Rating:</label><br/>
     <span id="r-radio">
-      <input type="radio" name="r-list" value="1"/>1
-      <input type="radio" name="r-list" value="2"/>2
-      <input type="radio" name="r-list" value="3"/>3
-      <input type="radio" name="r-list" value="4"/>4
-      <input type="radio" name="r-list" value="5"/>5 
+      <input aria-label="rating : 1 star" type="radio" name="r-list" value="1"/>1
+      <input aria-label="rating : 2 star"type="radio" name="r-list" value="2"/>2
+      <input aria-label="rating : 3 star"type="radio" name="r-list" value="3"/>3
+      <input aria-label="rating : 4 star"type="radio" name="r-list" value="4"/>4
+      <input aria-label="rating : 5 star" type="radio" name="r-list" value="5"/>5 
     </span>
     <br/><br/>
     <label for="r-comments">Comments:</label><br/>
-    <textarea id="r-comments"name="comments" rows="5"></textarea>
+    <textarea aria-lable="enter additional comments" id="r-comments"name="comments" rows="5"></textarea>
     <br/>
     <button id="btn-submit" onclick="submitModal()">Submit</button>
   </div>

@@ -148,6 +148,8 @@ function toggleFav(item , restaurant_id) {
       if(item.className === 'fav-true'){
           item.classList.toggle('fav-false');
           item.className='fav-false';
+          item.setAttribute('aria-label' , 'add restaurant to favorites') ;
+
           //fav_queue.push({'id' : restaurant_id , 'isFav' : false }); 
           AddtoSyncFavDB( restaurant_id ,  false );
 
@@ -155,6 +157,8 @@ function toggleFav(item , restaurant_id) {
       else {
         item.classList.toggle('fav-true');
         item.className='fav-true';
+        item.setAttribute('aria-label' , 'remove restaurant from favorites') ;
+
         //fav_queue.push({'id' : restaurant_id , 'isFav' : true }); 
         AddtoSyncFavDB(restaurant_id , true );
 
@@ -169,12 +173,16 @@ function toggleFav(item , restaurant_id) {
       DBHelper.updateFav(restaurant_id,false).then(()=>{
           item.classList.toggle('fav-false');
           item.className='fav-false';
+          item.setAttribute('aria-label' , 'add restaurant to favorites') ;
+
       });
     }
     else {
       DBHelper.updateFav(restaurant_id,true).then(()=> {
         item.classList.toggle('fav-true');
         item.className='fav-true';
+        item.setAttribute('aria-label' , 'remove restaurant from favorites') ;
+
       });
     }  
   }
@@ -189,10 +197,14 @@ createRestaurantHTML = (restaurant) => {
     let star = document.createElement('button');
     star.classList.add('fav-true' , 'fav-false');
     star.innerHTML= '✪';
-    if (restaurant.is_favorite == true || restaurant.is_favorite == "true")
+    if (restaurant.is_favorite == true || restaurant.is_favorite == "true"){
         star.className='fav-true';
-    else
+        star.setAttribute('aria-label' , 'remove restaurant from favorites') ;
+    }
+    else{
         star.className='fav-false';
+        star.setAttribute('aria-label' , 'add restaurant to favorites') ;
+    }
     star.setAttribute('onclick' , `toggleFav(this , ${restaurant.id})`);
     li.append(star);
   
