@@ -173,12 +173,21 @@ window.onclick = function(event) {
 
 
 function showModal(){
-      document.getElementById("error").style.display="none";
-      modal.style.display = "block";
+    document.getElementById('r-name').focus();
+    document.getElementById("error").style.display="none";
+    modal.style.display = "block";
+    //if user hits esc , close modal
+    document.onkeydown = function(evt) {
+      evt = evt || window.event;
+      if (evt.keyCode == 27) 
+        closeModal()  ;  
+}
 }
 
 function closeModal(){
       modal.style.display = "none";
+      //remove the event listner
+      document.onkeydown=null;
 }
 
 function getSelectedRadio(name){
