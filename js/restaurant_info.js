@@ -179,3 +179,39 @@ function showModal(){
 function closeModal(){
       modal.style.display = "none";
 }
+
+function getSelectedRadio(name){
+    var radios = document.getElementsByName(name);
+    for(var i =0 ; i<radios.length ; i++)
+      if(radios[i].checked)
+        return radios[i].value;
+  }
+
+function submitModal(){
+
+    const url = 'http://localhost:1337/reviews/';
+    let rid = window.location.href.split('?id=')[1];
+    let name=document.getElementById('r-name').value;
+    let rating=getSelectedRadio('r-list');
+    let comments=document.getElementById('r-comments').value;
+    let params = {
+    'restaurant_id': rid,
+    'name': name,
+    'rating': rating,
+    'comments': comments
+    } ; 
+    
+    fetch(url, {
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(params), 
+    }).then(console.log('posted review!')).
+    catch(error => console.log('error'));
+
+    closeModal();
+    location.reload();
+}
+
+

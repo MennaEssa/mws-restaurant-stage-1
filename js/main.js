@@ -3,8 +3,6 @@ let restaurants,
   cuisines
 var map
 var markers = []
-let fav_queue = [];
-
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
@@ -150,13 +148,15 @@ function toggleFav(item , restaurant_id) {
       if(item.className === 'fav-true'){
           item.classList.toggle('fav-false');
           item.className='fav-false';
-          fav_queue.push({'id' : restaurant_id , 'isFav' : false }); 
+          //fav_queue.push({'id' : restaurant_id , 'isFav' : false }); 
+          AddtoSyncFavDB( restaurant_id ,  false );
 
       }
       else {
         item.classList.toggle('fav-true');
         item.className='fav-true';
-        fav_queue.push({'id' : restaurant_id , 'isFav' : true }); 
+        //fav_queue.push({'id' : restaurant_id , 'isFav' : true }); 
+        AddtoSyncFavDB(restaurant_id , true );
 
       } 
       return;         
@@ -260,17 +260,3 @@ document.addEventListener('DOMContentLoaded' , event => {
 });
 
 
-/*Sync the queue when back online!*/
-function doSync() {
-  fav_queue.forEach( var_object => {
-    DBHelper.updateFav(var_object.id,var_object.isFav).then(()=>{
-      console.log(`synced fav element ${var_object.id}`);
-      fav_queue.shift();
-    }).catch((error)=> {
-      console.log(`sync failed for element ${var_object.id}`);
-      console.log(error);
-    });
-  });
-}
-
-window.addEventListener('online', doSync);

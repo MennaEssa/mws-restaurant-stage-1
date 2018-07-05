@@ -5,6 +5,8 @@
 const indexdb_name='restaurants_info';
 const reviews_store = 'reviews';
 const indexdb_store = 'restaurants';
+const syncFav_store='syncFav';
+const syncRev_store='syncRev';
 const port = 1337;
 
 class DBHelper {
@@ -28,6 +30,9 @@ class DBHelper {
           case 0:
             upgradeDb.createObjectStore( indexdb_store , { keyPath : 'id'}) ;
             upgradeDb.createObjectStore(reviews_store);
+            upgradeDb.createObjectStore(syncFav_store);
+            upgradeDb.createObjectStore(syncRev_store);
+
       }
     });
   }
