@@ -19,6 +19,11 @@
   </header>
 
   <main id="maincontent">
+    <div id="show-map-container" >
+    <button id="show-map" class="btn" onclick = "display_map()">View map</button>
+    </div>
+
+    <div id="map-full">
     <div id="skip-containter">
     <a id="skip-link" href="#neighborhoods-select" aria-label="skip google map to main content">
       Skip google map
@@ -26,6 +31,7 @@
   </div>
     <section id="map-container" tabindex=-1 aria-hidden="true">
       <div id="map" role="application" tabindex="-1"></div>
+  </div>
     </section>
     <section>
       <div class="filter-options">
@@ -37,6 +43,7 @@
           <option value="all">All Cuisines</option>
         </select>
       </div>
+ 
       <ul id="restaurants-list" class="flex-container"></ul>
     </section>
   </main>
