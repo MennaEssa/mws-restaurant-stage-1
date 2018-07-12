@@ -4,6 +4,8 @@ let uglify = require('gulp-uglify');
 let sourcemaps = require('gulp-sourcemaps');
 let imagemin = require('gulp-imagemin');
 let cleanCSS = require('gulp-clean-css');
+var csso = require('gulp-csso');
+
 const webp = require('gulp-webp');
 
 
@@ -40,10 +42,10 @@ gulp.task('webp', () =>
         .pipe(gulp.dest('dist/img'))
 );
 
-gulp.task('minify-css', () => {
-  return gulp.src('css/*.css')
-    .pipe(cleanCSS({compatibility: 'ie8'}))
-    .pipe(gulp.dest('dist/img'));
+gulp.task('styles', function () {
+    return gulp.src('css/styles.css')
+        .pipe(csso())
+        .pipe(gulp.dest('./dist/css'));
 });
 
 function defaultTask(done) {

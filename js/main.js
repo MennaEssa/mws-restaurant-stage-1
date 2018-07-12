@@ -254,6 +254,10 @@ addMarkersToMap = (restaurants = self.restaurants) => {
   });
 }
 
+function display_map() {
+  document.getElementById('map-full').style.display='block';
+  document.getElementById('show-map-container').style.display='none'
+}
 
 /*
 *  Service worker stuff

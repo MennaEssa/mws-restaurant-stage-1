@@ -150,7 +150,7 @@ nav h1 a {
 
 #skip-containter{
   width: 100%;
-  text-align: right;
+  text-align: center;
 
 }
 #skip-containter-inside{
@@ -378,7 +378,7 @@ nav h1 a {
   padding-bottom: 1pt;
 }
 
-#r-btn{
+.btn , #r-btn{
 
   background-color:#d2781f;
   border : none;
@@ -391,6 +391,18 @@ nav h1 a {
   text-decoration: none;
 
 }
+
+#show-map-container , #show-map-container2{
+  text-align: center;
+}
+
+#show-map-container2
+{
+  text-align: center;
+  margin-top:130px;
+}
+
+
 
 #reviews-list {
   margin: 0;
@@ -420,7 +432,16 @@ nav h1 a {
 
 /*Media queries*/
 
-@media screen and (min-width: 444px) {
+@media screen and (max-width: 920px)
+{
+  #map-full{
+    display: none;
+  }
+
+}
+
+@media screen and (min-width: 500px) {
+
   .filter-options {
     height: 80px;
   }
@@ -449,6 +470,7 @@ nav h1 a {
 
 @media screen and (min-width: 651px) {
 
+/**hide map and link till user choses to show them **/
 
   #restaurant-container{
     float:right;
@@ -471,6 +493,12 @@ nav h1 a {
 }
 
 @media screen and (min-width: 921px) {
+    #show-map-container , #show-map-container2 {
+        display: none;
+    }
+
+
+
   .flex-container {
     flex-direction: row;
   }

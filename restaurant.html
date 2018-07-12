@@ -33,6 +33,11 @@
   <!-- Beginning main -->
   <main id="maincontent">
     <!-- Beginning map -->
+    <div id="show-map-container2">
+      <button id="show-map" class="btn" onclick = "display_map()">View map</button>
+    </div>
+  
+  <div id="map-full">
 
     <div id="skip-containter-inside">
     <a id="skip-link" href="#restaurant-name" aria-label="skip google map to main content">
@@ -42,6 +47,7 @@
       <section id="map-container" tabindex=-1>
       <div id="map" aria-describedby="restaurant-address" role="application" tabindex="-1"></div>
     </section>
+  </div>
     <!-- End map -->
     <!-- Beginning restaurant -->
     <section id="restaurant-container">
@@ -103,6 +109,12 @@
 
   <!-- Beginning scripts -->
   <!-- Database helpers -->
+  <script type="text/javascript">
+    function display_map() {
+      document.getElementById('map-full').style.display='block';
+      document.getElementById('show-map-container2').style.display='none';
+  }
+</script>
   <script type="application/javascript" charset="utf-8" src="js/idb.js"></script>
   <script type="text/javascript" src="js/dbhelper.js"></script>
   <!-- Main javascript file -->
@@ -110,6 +122,7 @@
   <script type="text/javascript" src="js/restaurant_info.js"></script>
    <!-- Google Maps -->
   <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCbwYJRFofOWsrzthiQSsx8wyL5JxK7Jyc&libraries=places&callback=initMap"></script>
+
   <!-- End scripts -->
 
 </body>
