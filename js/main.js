@@ -107,6 +107,8 @@ updateRestaurants = () => {
     } else {
       resetRestaurants(restaurants);
       fillRestaurantsHTML();
+      var load = new LazyLoad();
+
     }
   })
 }
@@ -209,8 +211,15 @@ createRestaurantHTML = (restaurant) => {
     li.append(star);
   
   const image = document.createElement('img');
-  image.className = 'restaurant-img';
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
+  image.className = 'restaurant-img'; 
+  //adding to lazy loading list
+  image.classList.add('lazy');
+
+  // image.src = DBHelper.imageUrlForRestaurant(restaurant);
+
+  //add datasrc 
+  image.setAttribute('data-src' , `${DBHelper.imageUrlForRestaurant(restaurant)}`);
+
   image.alt = DBHelper.altForRestaurant(restaurant);
   li.append(image);
 
@@ -235,9 +244,8 @@ createRestaurantHTML = (restaurant) => {
   more.setAttribute('aria-label', "name :" + restaurant.name + ",address :" + restaurant.address + ", view details");
   //  more.setAttribute('aria-describedby' ,name.id);
   //  more.setAttribute('aria-details' , address.id);
-  li.append(more)
-
-  return li
+  li.append(more);
+  return li;
 }
 
 /**
